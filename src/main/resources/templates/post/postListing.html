@@ -95,6 +95,9 @@
             bottom: 0;
             width: 100%;
         }
+        #emailU{
+            color: #f8f9fa;
+        }
     </style>
 </head>
 <body>
@@ -105,8 +108,8 @@
 <nav>
     <nav>
         <div th:if="${session.loggedInUser != null}">
-            <p th:text="'Welcome, ' + ${session.loggedInUser.email}"></p>
-            <a href="/logout">Logout</a>
+            <p id="emailU" th:text="'Welcome, ' + ${session.loggedInUser.email}"></p>
+            <a href="/users/logout">Logout</a>
             <a href="/newpost">New Post</a>
         </div>
         <div th:if="${session.loggedInUser == null}">

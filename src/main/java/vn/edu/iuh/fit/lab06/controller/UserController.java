@@ -1,4 +1,5 @@
 package vn.edu.iuh.fit.lab06.controller;
+
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -19,7 +20,8 @@ import java.time.Instant;
 
 @Controller
 @RequestMapping("/users")
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserController {
     @Autowired
     private UserRepository userRepository;
@@ -29,35 +31,34 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private HttpSession httpSession;
+
     @GetMapping("/{id}")
-    public String getUser(@PathVariable("id") String id){
+    public String getUser(@PathVariable("id") String id) {
         return "";
     }
 
     @GetMapping("/add-form")
-    public String show(@ModelAttribute User user, Model model){
-        user =new User();
-        model.addAttribute("user",user);
+    public String show(@ModelAttribute User user, Model model) {
+        user = new User();
+        model.addAttribute("user", user);
         return "users/add-form";
     }
-    public String add(@ModelAttribute User user, Model model){
+
+    public String add(@ModelAttribute User user, Model model) {
         userRepository.save(user);
         return "/";
     }
+
     @GetMapping("/login-form")
     public String showLogin(@ModelAttribute User user, Model model) {
         model.addAttribute("user", new User());
         return "user/login";
     }
+
     @PostMapping("/login")
-    public String login(
-            @ModelAttribute User user,
-            RedirectAttributes redirectAttributes,
-            @RequestParam("password") String password
-    ) {
+    public String login(@ModelAttribute User user, RedirectAttributes redirectAttributes, @RequestParam("password") String password) {
         User loggedInUser = userServices.login(user.getEmail(), password);
         if (loggedInUser != null) {
-            // Store the logged-in user in the session
             httpSession.setAttribute("loggedInUser", loggedInUser);
             return "redirect:/posts/posts";
         } else {
@@ -66,17 +67,21 @@ public class UserController {
         }
 
 
-}
-
+    }
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/users/login-form";
+    }
     @GetMapping("/register-form")
-    public String showRegistrationForm(Model model ) {
+    public String showRegistrationForm(Model model) {
         User user = new User();
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         return "user/register";
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user, Model model,@RequestParam("password") String password) {
+    public String registerUser(@ModelAttribute User user, Model model, @RequestParam("password") String password) {
         user.setRegisteredAt(Instant.now());
         System.out.println(password);
         user.setPasswordHash(passwordEncoder.encode(password));

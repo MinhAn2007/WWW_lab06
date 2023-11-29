@@ -3,20 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyQT7iURe9x9M1gLLy/2JoVMI9uSrtVYY"
+          crossorigin="anonymous">
     <title>User Login</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 8px;
+            text-align: left;
+            width: 100%;
+        }
+
+        input {
+            margin-bottom: 16px;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box; /
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-<h1>User Login</h1>
-<form th:action="@{/users/login}" method="post">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
+<h1 class="text-center mt-5 mb-3">User Login</h1>
+<div class="container">
+    <form th:action="@{/users/login}" method="post" class="mx-auto" style="max-width: 400px;">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+        </div>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" th:value="${password}" />
-    <button type="submit">Login</button>
-    <script th:if="${error}" th:inline="javascript">
-        alert([[${error}]]);
-    </script>
-</form>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" class="form-control" th:value="${password}" />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+
+        <div th:if="${error}" class="alert alert-danger mt-3" role="alert">
+            <script th:inline="text">document.write([[${error}]])</script>
+        </div>
+    </form>
+</div>
 </body>
 </html>
