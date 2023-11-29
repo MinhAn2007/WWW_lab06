@@ -17,7 +17,12 @@ public class UserServices {
 
 
     public User login(String email, String password) {
-        return  userRepository.findByEmailAndPasswordHash(email, password).orElse(null);
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isPresent() && passwordEncoder.matches(password, optionalUser.get().getPasswordHash())) {
+            System.out.println("true");
+            return optionalUser.get();
+        }
+        return null;
     }
     public User registerUser(User user) {
         if (userRepository.existsByEmail(user.getEmail())) {

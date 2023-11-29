@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.edu.iuh.fit.lab06.models.User;
 import vn.edu.iuh.fit.lab06.repositories.UserRepository;
 import vn.edu.iuh.fit.lab06.service.UserServices;
@@ -40,16 +41,27 @@ public class UserController {
         userRepository.save(user);
         return "/";
     }
-    @GetMapping("/show-login-page")
-    public String show_login(@ModelAttribute User user, Model model){
+    @GetMapping("/login-form")
+    public String showLogin(@ModelAttribute User user, Model model) {
         model.addAttribute("user", new User());
-        return "users/login";
+        return "user/login";
     }
     @PostMapping("/login")
-    public String login(@ModelAttribute User user, Model model){
-        User us = userServices.login(user.getEmail(), user.getPasswordHash());
-        return "index";
+    public String login(
+            @ModelAttribute User user,
+            RedirectAttributes redirectAttributes,
+            @RequestParam("password") String password
+    ) {
+        System.out.println(password);
+        User loggedInUser = userServices.login(user.getEmail(), password);
+        if (loggedInUser != null) {
+            return "redirect:/posts/posts";
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Invalid username or password");
+            return "redirect:/users/login-form";
+        }
     }
+
     @GetMapping("/register-form")
     public String showRegistrationForm(Model model ) {
         User user = new User();
