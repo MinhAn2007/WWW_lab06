@@ -51,8 +51,9 @@ public class Post {
     private Instant publishedAt;
 
     @Lob
-    @Column(name = "content", columnDefinition = "text")
+    @Column(name = "content", columnDefinition = "TEXT CHARACTER SET utf16 COLLATE utf16_unicode_nopad_ci")
     private String content;
+
 
     @OneToMany(mappedBy = "parent")
     private Set<Post> posts = new LinkedHashSet<>();

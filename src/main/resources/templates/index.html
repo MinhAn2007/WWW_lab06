@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post List</title>
 </head>
 <body>
-    <h1>An</h1>
+<h1>Post List</h1>
+<ul th:each="post : ${posts}">
+    <li th:text="${post.content}"></li>
+    <li th:text="${post.summary}"></li>
+</ul>
 </body>
 </html>
