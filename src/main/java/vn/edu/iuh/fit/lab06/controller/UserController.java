@@ -1,4 +1,5 @@
 package vn.edu.iuh.fit.lab06.controller;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import lombok.AllArgsConstructor;
@@ -26,6 +27,8 @@ public class UserController {
     private UserServices userServices;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private HttpSession httpSession;
     @GetMapping("/{id}")
     public String getUser(@PathVariable("id") String id){
         return "";
@@ -52,15 +55,18 @@ public class UserController {
             RedirectAttributes redirectAttributes,
             @RequestParam("password") String password
     ) {
-        System.out.println(password);
         User loggedInUser = userServices.login(user.getEmail(), password);
         if (loggedInUser != null) {
+            // Store the logged-in user in the session
+            httpSession.setAttribute("loggedInUser", loggedInUser);
             return "redirect:/posts/posts";
         } else {
             redirectAttributes.addFlashAttribute("error", "Invalid username or password");
             return "redirect:/users/login-form";
         }
-    }
+
+
+}
 
     @GetMapping("/register-form")
     public String showRegistrationForm(Model model ) {

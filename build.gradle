@@ -43,6 +43,7 @@ dependencies {
 
     implementation 'org.springframework.security:spring-security-crypto'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.springframework.security:spring-security-core:6.2.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

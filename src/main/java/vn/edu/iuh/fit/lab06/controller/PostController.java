@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import vn.edu.iuh.fit.lab06.models.Post;
 import vn.edu.iuh.fit.lab06.repositories.PostRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class PostController {
         model.addAttribute("posts", posts);
         return "post/postListing";
     }
+
     @GetMapping("/details/{postId}")
     public String getPostById(@PathVariable Long postId, Model model) {
         Post post = postRepository.findById(postId)

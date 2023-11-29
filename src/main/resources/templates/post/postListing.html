@@ -101,11 +101,19 @@
 <header>
     <h1>Blog Post List</h1>
 </header>
+
 <nav>
-    <a href="/users/login-form">Login</a>
-    <a href="/users/register-form">Register</a>
-    <a href="/logout">Logout</a>
-    <a href="/newpost">New Post</a>
+    <nav>
+        <div th:if="${session.loggedInUser != null}">
+            <p th:text="'Welcome, ' + ${session.loggedInUser.email}"></p>
+            <a href="/logout">Logout</a>
+            <a href="/newpost">New Post</a>
+        </div>
+        <div th:if="${session.loggedInUser == null}">
+            <a href="/users/login-form">Login</a>
+            <a href="/users/register-form">Register</a>
+        </div>
+    </nav>
 </nav>
 <div class="container">
     <ul th:each="post : ${posts}">
