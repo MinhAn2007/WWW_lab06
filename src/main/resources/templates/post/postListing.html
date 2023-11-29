@@ -109,6 +109,7 @@
     <nav>
         <div th:if="${session.loggedInUser != null}">
             <p id="emailU" th:text="'Welcome, ' + ${session.loggedInUser.email}"></p>
+            <a class="btn btn-primary" th:href="@{'/users/details/' + ${session.loggedInUser.id}}">View Details</a>
             <a href="/users/logout">Logout</a>
             <a href="/newpost">New Post</a>
         </div>

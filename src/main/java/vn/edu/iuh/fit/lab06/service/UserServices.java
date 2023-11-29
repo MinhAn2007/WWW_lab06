@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.lab06.models.User;
 import vn.edu.iuh.fit.lab06.repositories.UserRepository;
 
-import java.time.Instant;
 import java.util.Optional;
 
 @Service
@@ -16,6 +15,7 @@ public class UserServices {
     private final BCryptPasswordEncoder passwordEncoder;
 
 
+    public User save (User  user){return userRepository.save(user);}
     public User login(String email, String password) {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isPresent() && passwordEncoder.matches(password, optionalUser.get().getPasswordHash())) {
@@ -29,7 +29,6 @@ public class UserServices {
             throw new RuntimeException("Email đã được sử dụng.");
         }
         user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
-        user.setRegisteredAt(Instant.now());
         return userRepository.save(user);
     }
 

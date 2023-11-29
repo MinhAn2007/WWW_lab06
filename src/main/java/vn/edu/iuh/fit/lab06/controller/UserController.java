@@ -59,6 +59,8 @@ public class UserController {
     public String login(@ModelAttribute User user, RedirectAttributes redirectAttributes, @RequestParam("password") String password) {
         User loggedInUser = userServices.login(user.getEmail(), password);
         if (loggedInUser != null) {
+            loggedInUser.setLastLogin(Instant.now());
+            userServices.save(loggedInUser);
             httpSession.setAttribute("loggedInUser", loggedInUser);
             return "redirect:/posts/posts";
         } else {
@@ -82,11 +84,18 @@ public class UserController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute User user, Model model, @RequestParam("password") String password) {
-        user.setRegisteredAt(Instant.now());
         System.out.println(password);
         user.setPasswordHash(passwordEncoder.encode(password));
         userRepository.save(user);
         model.addAttribute("message", "Registration successful. Please login.");
         return "user/login";
+    }
+    @GetMapping("/details/{userId}")
+    public String showUserDetails(@PathVariable Long userId, Model model) {
+        User user = userRepository.findById(userId)
+                .orElse(null);
+
+        model.addAttribute("user", user);
+        return "user/userDetails";
     }
 }
