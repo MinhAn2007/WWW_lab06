@@ -9,7 +9,9 @@ import vn.edu.iuh.fit.lab06.models.User;
 import vn.edu.iuh.fit.lab06.repositories.PostRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import vn.edu.iuh.fit.lab06.service.UserServices;
 
+import java.time.Instant;
 import java.util.List;
 
 @Controller
@@ -17,6 +19,8 @@ import java.util.List;
 public class PostController {
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private UserServices userServices;
 
     @GetMapping("/posts")
     public String getAllPosts(Model model) {
@@ -28,20 +32,20 @@ public class PostController {
 
     @GetMapping("/details/{postId}")
     public String getPostById(@PathVariable Long postId, Model model) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
         model.addAttribute("post", post);
         return "post/postDetails";
     }
+
     @GetMapping("/newsubposts/{parentId}")
-    public String showNewSubPostForm(@PathVariable Long parentId, @ModelAttribute Post subPost,Model model) {
-        Post parentPost = postRepository.findById(parentId)
-                .orElseThrow(() -> new RuntimeException("Parent Post not found with id: " + parentId));
+    public String showNewSubPostForm(@PathVariable Long parentId, @ModelAttribute Post subPost, Model model) {
+        Post parentPost = postRepository.findById(parentId).orElseThrow(() -> new RuntimeException("Parent Post not found with id: " + parentId));
         model.addAttribute("post", parentPost);
         model.addAttribute("subPost", new Post());
         System.out.println("t");
         return "post/newSubPost";
     }
+
     @GetMapping("/login-form")
     public String showLogin(@ModelAttribute User user, Model model) {
         model.addAttribute("user", new User());
@@ -49,7 +53,13 @@ public class PostController {
     }
 
     @PostMapping("/newsubposts")
-    public String createNewSubPost(@ModelAttribute("subPost") Post subPost, Model model) {
+    public String createNewSubPost(@ModelAttribute("subPost") Post subPost, Model model, @RequestParam("parentId") long parentId, @RequestParam("authorId") long authorId) {
+        subPost.setParent(postRepository.findById(parentId).orElseThrow());
+        subPost.setCreatedAt(Instant.now());
+        subPost.setPublished(true);
+        subPost.setPublishedAt(Instant.now());
+        subPost.setUpdatedAt(Instant.now());
+        subPost.setAuthor(userServices.findById(authorId).orElseThrow());
         postRepository.save(subPost);
         return "redirect:/posts/details/" + subPost.getParent().getId();
     }

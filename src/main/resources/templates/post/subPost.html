@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyQT7iURe9x9M1gLLy/2JoVMI9uSrtVYY"
+          crossorigin="anonymous">
+    <title>Sub-Posts</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        .label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .post-content {
+            line-height: 1.6;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Sub-Posts</h1>
+</header>
+<div class="container">
+    <h2>Sub-Posts for Post: <span th:text="${post.title}"></span></h2>
+
+    <ul>
+        <li th:each="subPost : ${subPosts}">
+            <h3 class="post-title" th:text="${subPost.title}"></h3>
+            <p class="post-content">
+                <span class="label">Content:</span>
+                <span th:text="${subPost.content}"></span>
+            </p>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

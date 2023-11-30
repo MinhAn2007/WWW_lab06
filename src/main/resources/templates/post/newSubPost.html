@@ -9,6 +9,9 @@
     <p>Parent Post: <span th:text="${post.title}"></span></p>
     <form method="post" th:action="@{/posts/newsubposts}" th:object="${subPost}">
         <input type="hidden" name="parentId" th:value="${post.id}">
+        <input type="hidden" name="authorId" th:value="${session.loggedInUser.id}">
+        <label>Meta Title:</label>
+        <input type="text" th:field="*{metaTitle}" placeholder="metaTitle" required>
         <label>Title:</label>
         <input type="text" th:field="*{title}" placeholder="Title" required>
 

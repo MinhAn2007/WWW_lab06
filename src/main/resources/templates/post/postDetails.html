@@ -76,8 +76,14 @@
         <span class="label">Author Profile:</span>
         <span th:text="${post.author.profile}"></span>
     </p>
-    <a class="btn btn-primary" th:href="@{'/posts/newsubposts/' + ${post.id}}">New Sub-Post</a>
+    <a class="btn btn-secondary" th:href="@{'/posts/subposts/' + ${post.id}}">View Sub-Posts</a>
+    <div th:if="${session.loggedInUser != null}">
+        <a class="btn btn-primary" th:href="@{'/posts/newsubposts/' + ${post.id}}">New Sub-Post</a>
+    </div>
+    <div th:if="${session.loggedInUser == null}">
+        <p>Please <a th:href="@{/users/login-form}">login</a> to create a new sub-post or comment</p>
 
+    </div>
 </div>
 </body>
 </html>
