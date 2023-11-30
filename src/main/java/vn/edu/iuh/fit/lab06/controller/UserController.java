@@ -95,8 +95,21 @@ public class UserController {
     public String showUserDetails(@PathVariable Long userId, Model model) {
         User user = userRepository.findById(userId)
                 .orElse(null);
-
         model.addAttribute("user", user);
         return "user/userDetails";
+    }
+
+    @GetMapping("/update/{userId}")
+    public String showUpdateForm(@ModelAttribute User user, Model model,@PathVariable long userId) {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        model.addAttribute("user", existingUser);
+        return "user/updateUser";
+    }
+
+    @PostMapping("/update")
+    public String updateUser(@ModelAttribute User updatedUser) {
+        userServices.save(updatedUser);
+        return "redirect:/users/details/" + updatedUser.getId();
     }
 }
