@@ -33,6 +33,7 @@ public class CommentController {
     private PostCommentServices postCommentServices;
     @Autowired
     private UserServices userServices;
+
     @GetMapping("/comment/{postId}")
     public String showCommentForm(@PathVariable Long postId, Model model) {
         System.out.println("t");
@@ -50,7 +51,7 @@ public class CommentController {
     }
 
     @PostMapping("/addComment")
-    public String createComment(@ModelAttribute("comment") PostComment comment,@RequestParam("postId") Long postId,@RequestParam("userId") Long userId) {
+    public String createComment(@ModelAttribute("comment") PostComment comment, @RequestParam("postId") Long postId, @RequestParam("userId") Long userId) {
         comment.setCreatedAt(Instant.now());
         comment.setPublishedAt(Instant.now());
         comment.setPublished(true);
@@ -68,8 +69,9 @@ public class CommentController {
 
         return "comment/listComment";
     }
+
     @GetMapping("/reply/{commentId}/{postId}")
-    public String showReplyForm(@PathVariable Long commentId,@PathVariable Long postId, @ModelAttribute PostComment reply, Model model) {
+    public String showReplyForm(@PathVariable Long commentId, @PathVariable Long postId, @ModelAttribute PostComment reply, Model model) {
         model.addAttribute("commentId", commentId);
         model.addAttribute("postId", postId);
         model.addAttribute("reply", new PostComment());
@@ -88,6 +90,17 @@ public class CommentController {
         reply.setPublishedAt(Instant.now());
         reply.setUser(userServices.findById(userId).orElseThrow());
         postCommentServices.save(reply);
-        return "redirect:/comments/details/" + reply.getParent().getId();
+        return "redirect:/comment/comments/" + reply.getParent().getId();
+    }
+
+    @GetMapping("/replies/{commentId}")
+    public String showReplies(@PathVariable Long commentId, Model model) {
+        PostComment comment = postCommentServices.findById(commentId).orElseThrow();
+        List<PostComment> replies = postCommentServices.getRepliesByCommentId(commentId);
+
+        model.addAttribute("comment", comment);
+        model.addAttribute("replies", replies);
+
+        return "comment/replies";
     }
 }

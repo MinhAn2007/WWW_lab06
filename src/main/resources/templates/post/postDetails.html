@@ -102,6 +102,7 @@
         <p>No posts-comments found.</p>
     </div>
     <div th:if="${session.loggedInUser != null}">
+        <a th:if="${session.loggedInUser.id == post.author.id}" class="btn btn-primary btn-update-post" th:href="@{'/posts/update/' + ${post.id}}">Update Post</a>
         <a class="btn btn-primary btn-new-sub-post" th:href="@{'/posts/newsubposts/' + ${post.id}}">New Sub-Post</a>
         <a class="btn btn-primary btn-new-sub-post" th:href="@{'/comment/comment/' + ${post.id}}">Comment</a>
     </div>

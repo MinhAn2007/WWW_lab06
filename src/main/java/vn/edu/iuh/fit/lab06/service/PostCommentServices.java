@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.lab06.models.PostComment;
 import vn.edu.iuh.fit.lab06.repositories.PostCommentRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -20,4 +21,8 @@ public class PostCommentServices {
     public Set<PostComment> findByPostId(long id){return postCommentRepository.findByPostId(id);}
 
     public Optional<PostComment> findById(long id){return postCommentRepository.findById(id);}
+
+    public List<PostComment> getRepliesByCommentId(Long commentId) {
+        return postCommentRepository.getRepliesByParentId(commentId);
+    }
 }
