@@ -233,4 +233,8 @@ Khi Logout bạn sẽ được đưa về màn hình đăng nhập
 
 ![img_54.png](img/img_54.png)
 
+*** Bonus
 
+Khi bạn đăng nhập sai web sẽ thông báo lỗi
+
+![img.png](img.png) 
