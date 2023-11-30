@@ -91,9 +91,15 @@
     <div th:if="${post.posts.size() == 0}">
         <p>No sub-posts found.</p>
     </div>
-
+    <div th:if="${post.postComments.size() > 0}">
+        <a class="btn btn-secondary btn-view-sub-posts" th:href="@{'/posts/comment/' + ${post.id}}">View Posts-comment</a>
+    </div>
+    <div th:if="${post.postComments.size() == 0}">
+        <p>No posts-comments found.</p>
+    </div>
     <div th:if="${session.loggedInUser != null}">
         <a class="btn btn-primary btn-new-sub-post" th:href="@{'/posts/newsubposts/' + ${post.id}}">New Sub-Post</a>
+        <a class="btn btn-primary btn-new-sub-post" th:href="@{'/comment/comment/' + ${post.id}}">Comment</a>
     </div>
     <div th:if="${session.loggedInUser == null}">
         <p>Please <a th:href="@{/users/login-form}">login</a> to create a new sub-post or comment</p>
