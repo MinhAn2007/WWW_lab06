@@ -18,4 +18,6 @@ public class PostCommentServices {
     private PostCommentRepository postCommentRepository;
     public void save(PostComment postComment){ postCommentRepository.save(postComment);}
     public Set<PostComment> findByPostId(long id){return postCommentRepository.findByPostId(id);}
+
+    public Optional<PostComment> findById(long id){return postCommentRepository.findById(id);}
 }

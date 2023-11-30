@@ -23,6 +23,7 @@
                 <span> on </span>
                 <span th:text="${#dates.format(comment.publishedAt, 'dd MMMM yyyy HH:mm')}"></span>
             </small>
+            <a class="btn btn-secondary mt-2" th:href="@{'/comment/reply/' + ${comment.id} + '/' + ${comment.post.id}}">Reply</a>
         </li>
     </ul>
 </div>

@@ -68,4 +68,26 @@ public class CommentController {
 
         return "comment/listComment";
     }
+    @GetMapping("/reply/{commentId}/{postId}")
+    public String showReplyForm(@PathVariable Long commentId,@PathVariable Long postId, @ModelAttribute PostComment reply, Model model) {
+        model.addAttribute("commentId", commentId);
+        model.addAttribute("postId", postId);
+        model.addAttribute("reply", new PostComment());
+        return "comment/reply";
+    }
+
+    @PostMapping("/reply")
+    public String createReply(@ModelAttribute("reply") PostComment reply,
+                              @RequestParam("parentId") long parentId,
+                              @RequestParam("postId") long postId,
+                              @RequestParam("userId") long userId) {
+        reply.setPost(postRepository.findById(postId).orElseThrow());
+        reply.setParent(postCommentServices.findById(parentId).orElseThrow());
+        reply.setCreatedAt(Instant.now());
+        reply.setPublished(true);
+        reply.setPublishedAt(Instant.now());
+        reply.setUser(userServices.findById(userId).orElseThrow());
+        postCommentServices.save(reply);
+        return "redirect:/comments/details/" + reply.getParent().getId();
+    }
 }
