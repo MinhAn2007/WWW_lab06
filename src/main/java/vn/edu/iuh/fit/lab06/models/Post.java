@@ -35,7 +35,7 @@ public class Post {
     private String metaTitle;
 
     @Lob
-    @Column(name = "summary", columnDefinition = "text")
+    @Column(name = "summary", columnDefinition = "TEXT CHARACTER SET utf16 COLLATE utf16_unicode_nopad_ci")
     private String summary;
 
     @Column(name = "published", nullable = false)

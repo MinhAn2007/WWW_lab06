@@ -45,7 +45,7 @@ public class PostComment{
     private Instant publishedAt;
 
     @Lob
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "TEXT CHARACTER SET utf16 COLLATE utf16_unicode_nopad_ci")
     private String content;
 
     @OneToMany(mappedBy = "parent")

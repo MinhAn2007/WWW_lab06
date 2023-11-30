@@ -65,9 +65,9 @@
 
     <ul>
         <li th:each="subPost : ${subPosts}">
-            <h3 class="post-title" th:text="${subPost.title}"></h3>
+            <h3 class="post-title" th:text="${subPost.title}">Title:</h3>
             <p class="post-content">
-                <span class="label">Content:</span>
+                <span class="label">Summary:</span>
                 <span th:text="${subPost.summary}"></span>
             </p>
             <a class="read-more-btn" th:href="@{'/posts/details/' + ${subPost.id}}">Read More</a>
