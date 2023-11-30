@@ -1,27 +1,15 @@
 package vn.edu.iuh.fit.lab06;
 
-import net.datafaker.Faker;
-import org.loremipsum.LoremIpsum;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import vn.edu.iuh.fit.lab06.models.Post;
 import vn.edu.iuh.fit.lab06.models.PostComment;
 import vn.edu.iuh.fit.lab06.models.User;
 import vn.edu.iuh.fit.lab06.repositories.PostCommentRepository;
 import vn.edu.iuh.fit.lab06.repositories.PostRepository;
 import vn.edu.iuh.fit.lab06.repositories.UserRepository;
-
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
 
 @Configuration
 @SpringBootApplication

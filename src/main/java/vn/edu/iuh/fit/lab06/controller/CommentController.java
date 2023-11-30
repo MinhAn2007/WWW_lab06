@@ -8,15 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import vn.edu.iuh.fit.lab06.models.PostComment;
 import vn.edu.iuh.fit.lab06.repositories.PostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.iuh.fit.lab06.models.Post;
 import vn.edu.iuh.fit.lab06.models.User;
-import vn.edu.iuh.fit.lab06.repositories.PostRepository;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import vn.edu.iuh.fit.lab06.service.PostCommentServices;
 import vn.edu.iuh.fit.lab06.service.UserServices;
 
@@ -90,7 +85,7 @@ public class CommentController {
         reply.setPublishedAt(Instant.now());
         reply.setUser(userServices.findById(userId).orElseThrow());
         postCommentServices.save(reply);
-        return "redirect:/comment/comments/" + reply.getParent().getId();
+        return "redirect:/comment/replies/" + reply.getParent().getId();
     }
 
     @GetMapping("/replies/{commentId}")

@@ -1,7 +1,6 @@
 package vn.edu.iuh.fit.lab06.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

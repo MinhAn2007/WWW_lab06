@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import vn.edu.iuh.fit.lab06.models.Post;
 import vn.edu.iuh.fit.lab06.models.User;
 import vn.edu.iuh.fit.lab06.repositories.PostRepository;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import vn.edu.iuh.fit.lab06.service.UserServices;
 
 import java.time.Instant;

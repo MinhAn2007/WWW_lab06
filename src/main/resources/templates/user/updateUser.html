@@ -64,7 +64,6 @@
         <input type="hidden" name="passwordHash" th:value="${user.passwordHash}">
         <input type="hidden" name="registeredAt" th:value="${user.registeredAt}">
         <input type="hidden" name="lastLogin" th:value="${session.loggedInUser.lastLogin}">
-
         <label for="firstName">First Name:</label>
         <input type="text" id="firstName" name="firstName" th:field="*{firstName}" required>
 
