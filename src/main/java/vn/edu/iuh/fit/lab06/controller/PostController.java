@@ -79,9 +79,25 @@ public class PostController {
     public String createNewPost(@ModelAttribute("newPost") Post newPost, Model model,@RequestParam("authorId") Long authorId) {
         newPost.setAuthor(userServices.findById(authorId).orElseThrow());
         newPost.setCreatedAt(Instant.now());
-        newPost.setUpdatedAt(Instant.now());
+        newPost.setPublishedAt(Instant.now());
         newPost.setPublished(true);
         postRepository.save(newPost);
         return "redirect:/posts/posts";
+    }
+    @GetMapping("/update/{postId}")
+    public String showUpdateForm(@PathVariable Long postId, Model model) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
+
+        model.addAttribute("post", post);
+        return "post/update";
+    }
+
+    @PostMapping("/update")
+    public String updatePost(@ModelAttribute Post updatedPost,@RequestParam("authorId") long authorId) {
+        updatedPost.setAuthor(userServices.findById(authorId).orElseThrow());
+        updatedPost.setUpdatedAt(Instant.now());
+        postRepository.save(updatedPost);
+        return "redirect:/posts/details/" + updatedPost.getId();
     }
 }
