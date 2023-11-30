@@ -13,6 +13,7 @@ import vn.edu.iuh.fit.lab06.service.UserServices;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/posts")
@@ -46,11 +47,6 @@ public class PostController {
         return "post/newSubPost";
     }
 
-    @GetMapping("/login-form")
-    public String showLogin(@ModelAttribute User user, Model model) {
-        model.addAttribute("user", new User());
-        return "user/login";
-    }
 
     @PostMapping("/newsubposts")
     public String createNewSubPost(@ModelAttribute("subPost") Post subPost, Model model, @RequestParam("parentId") long parentId, @RequestParam("authorId") long authorId) {
@@ -62,5 +58,14 @@ public class PostController {
         subPost.setAuthor(userServices.findById(authorId).orElseThrow());
         postRepository.save(subPost);
         return "redirect:/posts/details/" + subPost.getParent().getId();
+    }
+    @GetMapping("/subposts/{postId}")
+    public String viewSubPosts(@PathVariable Long postId, Model model) {
+        Post parentPost = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
+        Set<Post> subPosts = parentPost.getPosts();
+        model.addAttribute("post", parentPost);
+        model.addAttribute("subPosts", subPosts);
+        return "post/subPost";
     }
 }

@@ -76,8 +76,12 @@
         <span class="label">Author Profile:</span>
         <span th:text="${post.author.profile}"></span>
     </p>
-    <a class="btn btn-secondary" th:href="@{'/posts/subposts/' + ${post.id}}">View Sub-Posts</a>
-    <div th:if="${session.loggedInUser != null}">
+    <div th:if="${post.posts.size() > 0}">
+        <a class="btn btn-secondary" th:href="@{'/posts/subposts/' + ${post.id}}">View Sub-Posts</a>
+    </div>
+    <div th:if="${post.posts.size() == 0}">
+        <p>No sub-posts found.</p>
+    </div>    <div th:if="${session.loggedInUser != null}">
         <a class="btn btn-primary" th:href="@{'/posts/newsubposts/' + ${post.id}}">New Sub-Post</a>
     </div>
     <div th:if="${session.loggedInUser == null}">
