@@ -68,4 +68,20 @@ public class PostController {
         model.addAttribute("subPosts", subPosts);
         return "post/subPost";
     }
+
+    @GetMapping("/add")
+    public String showAddPostForm(@ModelAttribute("newPost") Post newPost, Model model) {
+        model.addAttribute("newPost", new Post());
+        return "post/addPost";
+    }
+
+    @PostMapping("/add")
+    public String createNewPost(@ModelAttribute("newPost") Post newPost, Model model,@RequestParam("authorId") Long authorId) {
+        newPost.setAuthor(userServices.findById(authorId).orElseThrow());
+        newPost.setCreatedAt(Instant.now());
+        newPost.setUpdatedAt(Instant.now());
+        newPost.setPublished(true);
+        postRepository.save(newPost);
+        return "redirect:/posts/posts";
+    }
 }

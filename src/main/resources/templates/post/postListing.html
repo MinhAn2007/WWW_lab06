@@ -111,7 +111,7 @@
             <p id="emailU" th:text="'Welcome, ' + ${session.loggedInUser.email}"></p>
             <a class="btn btn-primary" th:href="@{'/users/details/' + ${session.loggedInUser.id}}">View Details</a>
             <a href="/users/logout">Logout</a>
-            <a href="/newpost">New Post</a>
+            <a href="/posts/add">New Post</a>
         </div>
         <div th:if="${session.loggedInUser == null}">
             <a href="/users/login-form">Login</a>
