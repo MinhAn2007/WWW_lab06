@@ -92,7 +92,7 @@
         <p>No sub-posts found.</p>
     </div>
     <div th:if="${post.postComments.size() > 0}">
-        <a class="btn btn-secondary btn-view-sub-posts" th:href="@{'/posts/comment/' + ${post.id}}">View Posts-comment</a>
+        <a class="btn btn-secondary btn-view-sub-posts" th:href="@{'/comment/comments/' + ${post.id}}">View Posts-comment</a>
     </div>
     <div th:if="${post.postComments.size() == 0}">
         <p>No posts-comments found.</p>
