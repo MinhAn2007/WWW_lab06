@@ -60,6 +60,10 @@
 </header>
 <div class="container">
     <h2 class="post-title" th:text="${post.title}"></h2>
+    <p th:if="${post.parent != null}" class="post-meta">
+        <span class="label">Parent Post:</span>
+        <span th:text="${post.parent.title}"></span>
+    </p>
     <p class="post-meta">
         <span class="label">Published At:</span>
         <span th:text="${post.publishedAt}"></span>

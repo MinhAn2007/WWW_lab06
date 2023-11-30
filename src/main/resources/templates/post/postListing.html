@@ -121,7 +121,7 @@
 </nav>
 <div class="container">
     <ul th:each="post : ${posts}">
-        <li class="post">
+        <li class="post" th:unless="${post.parent != null}">
             <h2 class="post-title" th:text="${post.title}"></h2>
             <p class="post-meta">
                 <span class="label">Published At:</span>

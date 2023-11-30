@@ -65,7 +65,7 @@
 
     <ul>
         <li th:each="subPost : ${subPosts}">
-            <h3 class="post-title" th:text="${subPost.title}">Title:</h3>
+            <h3 class="post-title" th:text="'Title : ' + ${subPost.title}"></h3>
             <p class="post-content">
                 <span class="label">Summary:</span>
                 <span th:text="${subPost.summary}"></span>

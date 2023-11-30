@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyQT7iURe9x9M1gLLy/2JoVMI9uSrtVYY"
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyQT7iURe9x9M1gLLy/2JoVMI9uSrtVYY"
           crossorigin="anonymous">
     <title>User Login</title>
     <style>
@@ -43,7 +44,8 @@
             margin-bottom: 16px;
             padding: 8px;
             width: 100%;
-            box-sizing: border-box; /
+            box-sizing: border-box;
+        /
         }
 
         button {
@@ -66,13 +68,15 @@
 
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" class="form-control" th:value="${password}" />
+            <input type="password" id="password" name="password" class="form-control" th:value="${password}"/>
         </div>
 
         <button type="submit" class="btn btn-primary btn-block">Login</button>
 
         <div th:if="${error}" class="alert alert-danger mt-3" role="alert">
-            <script th:inline="text">document.write([[${error}]])</script>
+            <script th:if="${error}" th:inline="javascript">
+                alert([[${error}]]);
+            </script>
         </div>
     </form>
 </div>
