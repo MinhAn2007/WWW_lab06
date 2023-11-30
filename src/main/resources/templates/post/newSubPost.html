@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>New Sub-Post</title>
+</head>
+<body>
+<div class="container">
+    <h1>New Sub-Post</h1>
+    <p>Parent Post: <span th:text="${post.title}"></span></p>
+    <form method="post" th:action="@{/posts/newsubposts}" th:object="${subPost}">
+        <input type="hidden" name="parentId" th:value="${post.id}">
+        <label>Title:</label>
+        <input type="text" th:field="*{title}" placeholder="Title" required>
+
+        <label>Summary:</label>
+        <textarea th:field="*{summary}" placeholder="Summary" required></textarea>
+
+        <label>Content:</label>
+        <textarea th:field="*{content}" placeholder="Content" required></textarea>
+
+        <button type="submit">Create Sub-Post</button>
+    </form>
+</div>
+</body>
+</html>

@@ -84,6 +84,7 @@ public class UserController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute User user, Model model, @RequestParam("password") String password) {
+        user.setRegisteredAt(Instant.now());
         System.out.println(password);
         user.setPasswordHash(passwordEncoder.encode(password));
         userRepository.save(user);

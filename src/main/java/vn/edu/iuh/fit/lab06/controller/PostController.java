@@ -3,10 +3,9 @@ package vn.edu.iuh.fit.lab06.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import vn.edu.iuh.fit.lab06.models.Post;
+import vn.edu.iuh.fit.lab06.models.User;
 import vn.edu.iuh.fit.lab06.repositories.PostRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,5 +32,25 @@ public class PostController {
                 .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
         model.addAttribute("post", post);
         return "post/postDetails";
+    }
+    @GetMapping("/newsubposts/{parentId}")
+    public String showNewSubPostForm(@PathVariable Long parentId, @ModelAttribute Post subPost,Model model) {
+        Post parentPost = postRepository.findById(parentId)
+                .orElseThrow(() -> new RuntimeException("Parent Post not found with id: " + parentId));
+        model.addAttribute("post", parentPost);
+        model.addAttribute("subPost", new Post());
+        System.out.println("t");
+        return "post/newSubPost";
+    }
+    @GetMapping("/login-form")
+    public String showLogin(@ModelAttribute User user, Model model) {
+        model.addAttribute("user", new User());
+        return "user/login";
+    }
+
+    @PostMapping("/newsubposts")
+    public String createNewSubPost(@ModelAttribute("subPost") Post subPost, Model model) {
+        postRepository.save(subPost);
+        return "redirect:/posts/details/" + subPost.getParent().getId();
     }
 }
